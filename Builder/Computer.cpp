@@ -2,8 +2,12 @@
 // Created by eduardo on 3/18/21.
 //
 #include <string>
+#include <iostream>
 
 using namespace std;
+
+
+class Builder;
 
 class Computer {
 private:
@@ -11,20 +15,33 @@ private:
     int space;
     string processor;
     string graphicsCard;
+
 public:
     Computer() {
-        this->cooler = "stock cooler";
-        this->graphicsCard = "stock graphics card";
-        this->ram = 8;
-        this->caseTower = "stock case";
-        this->space = 1000;
-        this->processor = "stock processor";
+        this->cooler = "stock";
+        this->graphicsCard = "stock";
+        this->ram = 0;
+        this->caseTower = "stock";
+        this->space = 0;
+        this->processor = "stock";
     }
 
 private:
     string caseTower;
     string cooler;
 public:
+
+    void show() {
+        cout << "------------- Computer -------------" << "\n";
+        cout << "* Processor: " << this->processor << " \n";
+        cout << "* GPU: " << this->graphicsCard << "\n";
+        cout << "* RAM: " << this->ram << "\n";
+        cout << "* ROM: " << this->space << "\n";
+        cout << "* Case: " << this->caseTower  << "\n";
+        cout << "* cooler: " << this->cooler  << "\n";
+        cout << "------------------------------------" << "\n";
+    }
+
     int getRam() const {
         return ram;
     }
@@ -85,28 +102,35 @@ public:
         this->instance = new Computer();
     }
 
-    void withRam(int ram) {
+    Builder * withRam(int ram) {
         this->instance->setRam(ram);
+        return this;
     }
 
-    void withSpace(int space) {
+    Builder * withSpace(int space) {
         this->instance->setSpace(space);
+        return this;
+
     }
 
-    void withProcessor(string processor) {
+    Builder * withProcessor(string processor) {
         this->instance->setProcessor(processor);
+        return this;
     }
 
-    void withGPU(string gpu) {
+    Builder * withGPU(string gpu) {
         this->instance->setGraphicsCard(gpu);
+        return this;
     }
 
-    void withCase(string tower) {
+    Builder * withCase(string tower) {
         this->instance->setCaseTower(tower);
+        return this;
     }
 
-    void withCooler(string cooler) {
+    Builder * withCooler(string cooler) {
         this->instance->setCooler(cooler);
+        return this;
     }
 
     Computer *build() {
